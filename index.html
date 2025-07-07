@@ -8,24 +8,27 @@
 </head>
 <body>
 
-    <button traits="test test2">Click me!</button>
+    <button id="clicker" traits="   test    test2  ">Click me!</button>
+    <br>
+    <button id="deleter" traits="delete">Delete that clicker!</button>
 
     <script>
-        window.listeners = new WeakMap();
         // Define a trait
         defineTrait('test', class {
             constructor(element) {
+                console.log('Trait "test" connected');
                 this.element = element;
                 this.timesClicked = 0;
                 this.element.addEventListener('click', this);
-                window.listeners.set(this, true);
             }
 
             handleEvent(event) {
-                if (event.type === 'click') {
-                    this.timesClicked++;
-                    this.element.textContent = `Clicked ${this.timesClicked} times!`;
-                }
+                this[event.type]?.(event)
+            }
+
+            click() {
+                this.timesClicked++;
+                this.element.textContent = `Clicked ${this.timesClicked} times!`;
             }
 
             disconnectedCallback() {
@@ -35,12 +38,37 @@
 
         defineTrait('test2', class {
             constructor(element) {
+                console.log('Trait "test2" connected');
                 this.element = element;
                 this.element.style.backgroundColor = 'lightblue';
                 this.element.style.padding = '10px';
                 this.element.style.borderRadius = '5px';
             }
         });
+
+        defineTrait('delete', class {
+            constructor(element) {
+                console.log('Trait "delete" connected');
+                this.element = element;
+                this.element.addEventListener('click', this);
+            }
+
+            handleEvent(event) {
+                this[event.type]?.(event)
+            }
+
+            click() {
+                const clicker = document.getElementById('clicker');
+                if (clicker) {
+                    clicker.remove();
+                    console.log('Clicker button removed');
+                }
+            }
+
+            disconnectedCallback() {
+                console.log('Trait "delete" disconnected');
+            }
+        })
     </script>
 </body>
 </html>
