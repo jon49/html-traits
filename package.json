@@ -1,0 +1,19 @@
+{
+  "name": "html-traits",
+  "version": "0.0.0",
+  "description": "Built-in web components for all elements.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "html",
+    "web-components",
+    "is",
+    "built-in",
+    "trait",
+    "traits"
+  ],
+  "author": "Jon Nyman",
+  "license": "ISC"
+}

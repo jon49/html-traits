@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="traits.js"></script>
+</head>
+<body>
+
+    <button traits="test test2">Click me!</button>
+
+    <script>
+        window.listeners = new WeakMap();
+        // Define a trait
+        defineTrait('test', class {
+            constructor(element) {
+                this.element = element;
+                this.timesClicked = 0;
+                this.element.addEventListener('click', this);
+                window.listeners.set(this, true);
+            }
+
+            handleEvent(event) {
+                if (event.type === 'click') {
+                    this.timesClicked++;
+                    this.element.textContent = `Clicked ${this.timesClicked} times!`;
+                }
+            }
+
+            disconnectedCallback() {
+                console.log('Trait "test" disconnected');
+            }
+        });
+
+        defineTrait('test2', class {
+            constructor(element) {
+                this.element = element;
+                this.element.style.backgroundColor = 'lightblue';
+                this.element.style.padding = '10px';
+                this.element.style.borderRadius = '5px';
+            }
+        });
+    </script>
+</body>
+</html>
