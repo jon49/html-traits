@@ -1,9 +1,10 @@
 {
   "name": "html-traits",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Built-in web components for all elements.",
   "main": "index.js",
   "scripts": {
+    "build": "npx esbuild --minify --format=iife index.js > index.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -15,5 +16,8 @@
     "traits"
   ],
   "author": "Jon Nyman",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.25.6"
+  }
 }
