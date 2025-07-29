@@ -18,3 +18,7 @@ What are the advantages over web components?
 1. Built for progressive enhancement.
 1. No need for extra elements on your page just to get new runtime behavior.
 1. Cleaner HTML.
+
+## Examples
+
+[Example are here.](./index.html)

@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="traits.js"></script>
+    <script src="index.js"></script>
 </head>
 <body>
 
-    <button id="clicker" traits="   test    test2  ">Click me!</button>
+    <button id="clicker" traits="   test    test2  test3  ">Click me!</button>
     <br>
     <button id="deleter" traits="delete">Delete that clicker!</button>
 
@@ -36,14 +36,12 @@
             }
         });
 
-        defineTrait('test2', class {
-            constructor(element) {
-                console.log('Trait "test2" connected');
-                this.element = element;
-                this.element.style.backgroundColor = 'lightblue';
-                this.element.style.padding = '10px';
-                this.element.style.borderRadius = '5px';
-            }
+        defineTrait('test2', function(element) {
+            console.log('Trait "test2" connected');
+            this.element = element;
+            this.element.style.backgroundColor = 'lightblue';
+            this.element.style.padding = '10px';
+            this.element.style.borderRadius = '5px';
         });
 
         defineTrait('delete', class {
@@ -67,6 +65,28 @@
 
             disconnectedCallback() {
                 console.log('Trait "delete" disconnected');
+            }
+        })
+
+        defineTrait('test3', class {
+            constructor(element) {
+                this.element = element;
+                element.addEventListener('click', this);
+            }
+
+            handleEvent(event) {
+                this[event.type]?.(event)
+            }
+
+            click() {
+                console.log('test3 clicked');
+                let traits = this.element.getAttribute('traits');
+                this.element.setAttribute('traits', traits.replace('test3', ''));
+            }
+
+            disconnectedCallback() {
+                console.log('Test3 disconnected');
+                this.element.removeEventListener('click', this);
             }
         })
     </script>
