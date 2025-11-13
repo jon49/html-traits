@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="index.js"></script>
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
-    <button id="clicker" traits="   test    test2  test3  ">Click me!</button>
-    <br>
-    <button id="deleter" traits="delete">Delete that clicker!</button>
+    <main>
+        <button id="clicker" traits="   test    test2  test3  ">Click me!</button>
+        <button id="deleter" traits="delete">Delete that clicker!</button>
+        <button id="attr" traits="attr">Attribute</button>
+    </main>
 
     <script>
         // Define a trait
@@ -39,7 +42,7 @@
         defineTrait('test2', function(element) {
             console.log('Trait "test2" connected');
             this.element = element;
-            this.element.style.backgroundColor = 'lightblue';
+            this.element.style.backgroundColor = 'blueviolet';
             this.element.style.padding = '10px';
             this.element.style.borderRadius = '5px';
         });
@@ -89,6 +92,45 @@
                 this.element.removeEventListener('click', this);
             }
         })
+
+        defineTrait('attr', class {
+            constructor(element) {
+                this.element = element;
+                console.log('Trait "attr" connected');
+                this.update();
+                element.addEventListener('click', this);
+            }
+
+            handleEvent(event) {
+                this[event.type]?.(event)
+            }
+
+            click() {
+                const currentValue = this.element.getAttribute('data-info') || '';
+                const newValue = prompt('Enter new data-info value:', currentValue);
+                if (newValue !== null) {
+                    this.element.setAttribute('data-info', newValue);
+                }
+            }
+
+            update() {
+                const attrValue = this.element.getAttribute('data-info') || 'No data-info attribute set';
+                this.element.textContent = attrValue;
+            }
+
+            static observedAttributes = ['data-info'];
+
+            attributeChangedCallback(name, oldValue, newValue) {
+                console.log(`Trait "attr" observed attribute change: ${name} from "${oldValue}" to "${newValue}"`);
+                if (name === 'data-info') {
+                    this.update();
+                }
+            }
+
+            disconnectedCallback() {
+                console.log('Trait "attr" disconnected');
+            }
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,52 @@
+:root {
+  color-scheme: light dark;
+  --text: light-dark(#000, #FFF);
+  --bg: light-dark(#EEE, #242936);
+  &:has([name="theme"][value="light"]:checked) {
+    color-scheme: light;
+  }
+  &:has([name="theme"][value="dark"]:checked) {
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  padding: 1em;
+  line-height: 1.75;
+  font-size: 1.25em;
+  color: var(--text);
+  background-color: var(--bg);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 50vh;
+}
+
+main {
+  max-width: min(70ch, 95%);
+  margin-inline: auto;
+  margin-top: 2em;
+}
+
+button,
+input[type="submit"],
+input[type="button"] {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 3px;
+  display: block;
+  margin-bottom: 2em;
+}
